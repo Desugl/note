@@ -10,7 +10,7 @@
       :slides-per-view="1"
       :resistance-ratio="0"
       :speed="200"
-      @activeIndexChange="onActiveIndexChange"
+      @transitionEnd="onTransitionEnd"
       @tap="onTap"
     >
       <swiper-slide class="left-slide">编辑</swiper-slide>
@@ -33,22 +33,19 @@ const props = defineProps({
 
 const emit = defineEmit(["delete", "edit", "info"]);
 
-const onActiveIndexChange = (instance) => {
+const onTransitionEnd = (instance) => {
   const { activeIndex } = instance;
   if (activeIndex === 0) {
     emit("edit");
   } else if (activeIndex === 2) {
     emit("delete");
-    setTimeout(() => {
-      instance.destroy();
-    }, 1);
+    instance.destroy();
   }
 };
 
 const onTap = () => {
-  emit("info")
-}
-
+  emit("info");
+};
 </script>
 
 <style lang="postcss">
@@ -80,7 +77,7 @@ const onTap = () => {
     color: white;
     background: #0099ff;
     justify-content: flex-end;
-    box-sizing:border-box;
+    box-sizing: border-box;
     padding-right: 8px;
   }
 
@@ -89,7 +86,7 @@ const onTap = () => {
     background: tomato;
     padding-left: 8px;
     justify-content: flex-start;
-    box-sizing:border-box;
+    box-sizing: border-box;
   }
 }
 
